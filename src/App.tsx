@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import api from './services/api';
-import { type NewsArticles } from './data/interfaces';
+import { type Doc, type NewsArticles } from './data/interfaces';
 import logo from './assets/New_York_Times_T_icon.svg';
 import vector from './assets/businessman_read_newspaper.svg';
 import github_icon from './assets/github-mark.svg';
 import linkedin_icon from './assets/InBug-Black.png';
 import NewsItem from './components/NewsItem';
+import Loading from './components/Loading';
+import Pagination from './components/Pagination';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -14,13 +16,16 @@ function App() {
   const [filter, setFilter] = useState(null);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<NewsArticles>();
+  const [newsList, setNewsList] = useState<Doc[]>([])
   const [error, setError] = useState('');
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [newsPerPage] = useState(10);
 
   console.log(`Query: ${query}`);
   console.log(`Old query: ${oldQuery}`);
   console.log(`Current page: ${currentPage}`);
+  console.log(`News per page: ${newsPerPage}`);
 
   useEffect(() => {
     const handleScrollButtonVisibility = () => {
@@ -48,6 +53,16 @@ function App() {
     handleResetCurrentPage();
   }, [query, oldQuery])
 
+  useEffect(() => {
+    const handleAddToNewsList = () => {
+      if (response != null && response.status == 'OK') {
+        setNewsList(response.response.docs)
+      }
+    }
+
+    handleAddToNewsList()
+  }, [response])
+
   const handleSearchArticle = async (e: React.FormEvent) => {
     e.preventDefault();
     setOldQuery(query);
@@ -61,16 +76,6 @@ function App() {
         console.error(error);
         setError('Failed to load news articles');
       }
-    }
-  }
-
-  const handlePageNumber = (action: 'prev' | 'next') => {
-    if (action === 'prev') {
-      setCurrentPage(currentPage - 1)
-    }
-
-    if (action === 'next') {
-      setCurrentPage(currentPage + 1)
     }
   }
 
@@ -103,7 +108,7 @@ function App() {
         {
           response != null && response.status == 'OK' ? (
             <ul className='list-none grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-              {response.response.docs.map((article) => (
+              {newsList.map((article) => (
                 <NewsItem key={article._id} article={article} />
               ))}
             </ul>
@@ -111,9 +116,7 @@ function App() {
             <>
               {
                 loading ? (
-                  <div className='flex items-center justify-center w-full h-screen z-[999]'>
-                    <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-black' />
-                  </div>
+                  <Loading />
                 ) : (
                   <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-around'>
                     <div className='space-y-2'>
@@ -130,13 +133,11 @@ function App() {
         {
           response != null && response.status === 'OK' && (
             <form onSubmit={handleSearchArticle} className='flex space-x-4 mt-8 place-self-center'>
-              <button onClick={() => handlePageNumber('prev')} className={`${currentPage > 0 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
-                {'< Prev'}
-              </button>
-              <p>{currentPage + 1}</p>
-              <button onClick={() => handlePageNumber('next')} className={`${currentPage < Math.ceil(response.response.metadata.hits / 10) ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
-                {'Next >'}
-              </button>
+              <Pagination
+                itemsPerPage={newsPerPage}
+                totalItems={response?.response.metadata.hits ?? 0}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage} />
             </form>
           )
         }
