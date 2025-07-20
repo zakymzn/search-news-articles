@@ -1,69 +1,77 @@
-# React + TypeScript + Vite
+# 📰 New York Times Article Search App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Single Page Application (SPA) built with **React + Vite**, that allows users to search and browse news articles from **The New York Times**.
 
-Currently, two official plugins are available:
+Live demo: [https://your-app-url.netlify.app](https://your-app-url.netlify.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🔍 Search articles from The New York Times API
+- 📄 View article headlines, publication dates, and authors
+- 📱 Responsive layout using Tailwind CSS
+- 📚 Pagination support
+- 💬 Smooth user experience with loading indicators
+- ☁️ API requests via Axios
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 1. Clone the Repository
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/zakymzn/search-news-articles.git
+cd search-news-articles
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### 3. Create `.env` file
+
+This project uses a **New York Times Developer API Key**. Create a `.env` file at the root of the project based on the example.
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and replace with your own key.
+
+```bash
+VITE_API_KEY=your_api_key_here
+```
+
+You can get your API key by registering at https://developer.nytimes.com.
+
+### 4. Start the App
+
+```bash
+npm run dev
+```
+
+## 🌐 Deployment
+
+If you want to deploy this project (e.g. to Netlify or Vercel):
+
+- Add the environment variable `VITE_API_KEY` in the platform's **Environment Variables** settings
+- Then trigger a build or redeploy
+
+> 🔐 Your .env is ignored in version control by default to protect sensitive information.
+
+## 🧪 Testing
+
+To run functional and API tests (if configured):
+
+```bash
+npm run test
+```
+
+## 👤 Author
+
+**Ma'mur Zaky Nurrokhman**
+
+- GitHub: [zakymzn](https://github.com/zakymzn)
+- LinkedIn: [linkedin.com/in/zakymzn](https://linkedin.com/in/zakymzn)
