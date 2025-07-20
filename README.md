@@ -44,7 +44,7 @@ Then edit `.env` and replace with your own key.
 VITE_API_KEY=your_api_key_here
 ```
 
-You can get your API key by registering at https://developer.nytimes.com.
+You can get your API key by registering at <https://developer.nytimes.com>.
 
 ### 4. Start the App
 
