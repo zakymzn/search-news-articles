@@ -2,7 +2,7 @@
 
 This is a Single Page Application (SPA) built with **React + Vite**, that allows users to search and browse news articles from **The New York Times**.
 
-Live demo: [https://your-app-url.netlify.app](https://your-app-url.netlify.app)
+Live demo: [https://nytsearch.netlify.app](https://nytsearch.netlify.app)
 
 ## ✨ Features
 
