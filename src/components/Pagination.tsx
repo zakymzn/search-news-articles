@@ -23,25 +23,53 @@ function Pagination({
   return (
     <div>
       <ul className="flex flex-wrap space-x-4 items-center">
-        <button onClick={() => setCurrentPage(0)} className={`${currentPage > 0 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
+        <button onClick={() => {
+          setCurrentPage(0)
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }} className={`${currentPage > 0 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
           First
         </button>
-        <button onClick={() => setCurrentPage(currentPage - 1)} className={`${currentPage > 0 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
+        <button onClick={() => {
+          setCurrentPage(currentPage - 1)
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }} className={`${currentPage > 0 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
           {'< Prev'}
         </button>
         {
           pageNumbers.map((number) => (
             <li key={number} className={`${currentPage === number ? 'font-bold' : ''} ${number < (currentPage - 3) || number > (currentPage + 3) ? 'hidden' : ''} list-none`}>
               <button onClick={() => {
-                paginate(number);
+                paginate(number)
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                })
               }} className="hover:cursor-pointer">{number + 1}</button>
             </li>
           ))
         }
-        <button onClick={() => setCurrentPage(currentPage + 1)} className={`${currentPage < pageNumbers.length - 1 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
+        <button onClick={() => {
+          setCurrentPage(currentPage + 1)
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }} className={`${currentPage < pageNumbers.length - 1 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
           {'Next >'}
         </button>
-        <button onClick={() => setCurrentPage(pageNumbers.length - 1)} className={`${currentPage < pageNumbers.length - 1 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
+        <button onClick={() => {
+          setCurrentPage(pageNumbers.length - 1)
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }} className={`${currentPage < pageNumbers.length - 1 ? 'inline-block' : 'hidden'} hover:cursor-pointer`}>
           Last
         </button>
       </ul>

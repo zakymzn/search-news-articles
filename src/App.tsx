@@ -75,7 +75,7 @@ function App() {
           <form onSubmit={handleSearchArticle} className='w-full'>
             <input type="text" placeholder='Start searching ...' value={query} onChange={(e) => setQuery(e.target.value)} className='w-full px-4 py-2 focus:outline-none' />
           </form>
-          <button onClick={() => setQuery('')} className={`${query == '' || query == null ? 'hidden' : 'inline-block'} hover:cursor-pointer`}>
+          <button onClick={() => setQuery('')} className={`${query.trim() == '' ? 'hidden' : 'inline-block'} hover:cursor-pointer`}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
           </button>
         </div>
