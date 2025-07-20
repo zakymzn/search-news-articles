@@ -9,16 +9,15 @@ import linkedin_icon from './assets/InBug-Black.png';
 import NewsItem from './components/NewsItem';
 import Loading from './components/Loading';
 import Pagination from './components/Pagination';
+import ScrollButton from './components/ScrollButton';
 
 function App() {
   const [query, setQuery] = useState('');
   const [oldQuery, setOldQuery] = useState('');
-  const [filter, setFilter] = useState(null);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<NewsArticles>();
   const [newsList, setNewsList] = useState<Doc[]>([])
   const [error, setError] = useState('');
-  const [showScrollButton, setShowScrollButton] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [newsPerPage] = useState(10);
 
@@ -26,22 +25,6 @@ function App() {
   console.log(`Old query: ${oldQuery}`);
   console.log(`Current page: ${currentPage}`);
   console.log(`News per page: ${newsPerPage}`);
-
-  useEffect(() => {
-    const handleScrollButtonVisibility = () => {
-      if (window.pageYOffset > 100) {
-        setShowScrollButton(true);
-      } else {
-        setShowScrollButton(false);
-      }
-    }
-
-    window.addEventListener('scroll', handleScrollButtonVisibility);
-
-    return () => {
-      window.removeEventListener('scroll', handleScrollButtonVisibility);
-    }
-  }, []);
 
   useEffect(() => {
     const handleResetCurrentPage = () => {
@@ -66,10 +49,10 @@ function App() {
   const handleSearchArticle = async (e: React.FormEvent) => {
     e.preventDefault();
     setOldQuery(query);
-    if (query != '' || query != null) {
+    if (query.trim() != '') {
       try {
         setLoading(true);
-        const res = await api.get(`/articlesearch.json?q=${query}&page=${currentPage}`);
+        const res = await api.get(`/articlesearch.json?q=${query}${currentPage > 0 ? `&page=${currentPage}` : ''}`);
         setResponse(res.data);
         setLoading(false);
       } catch (error: any) {
@@ -155,14 +138,7 @@ function App() {
         </a>
       </footer>
 
-      <button onClick={() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        })
-      }} className={`${showScrollButton ? '' : 'hidden'} fixed bottom-4 right-4 p-4 rounded-full bg-white shadow-lg transition-all duration-200 hover:bg-black hover:fill-white hover:cursor-pointer hover:animate-pulse`}>
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z" /></svg>
-      </button>
+      <ScrollButton />
     </div>
   )
 }
